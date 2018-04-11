@@ -458,6 +458,10 @@ class EvernoteSyncLoader {
 
             // 写入日志到数据库$result = $wpdb->get_results("SELECT id,guid,title,created,updated FROM $table_name"); 
             $postid = wp_insert_post( $my_post );
+
+            if(!empty($note->attributes->sourceURL)) {
+              update_post_meta( $postid, 'sourceURL', $note->attributes->sourceURL );
+            }
           }
           else{
             // 创建 post 对象（数组）
@@ -472,6 +476,10 @@ class EvernoteSyncLoader {
 
             // 写入日志到数据库$result = $wpdb->get_results("SELECT id,guid,title,created,updated FROM $table_name"); 
             wp_update_post( $my_post );
+
+            if(!empty($note->attributes->sourceURL)) {
+              update_post_meta( $my_post['ID'], 'sourceURL', $note->attributes->sourceURL );
+            }
           }
 
           /*保存发布记录*/        
